@@ -20,7 +20,7 @@ jobs:
     - name: Create local changes
       run: |
         wget -O ranges_nuclei.txt https://cdn.nuclei.sh/
-        curl -k -s --data "resp_format=json" https://my.imperva.com/api/integration/v1/ips | jq '[.["Imperva"] = .ipRanges | .["ImpervaIPv6"] = .ipv6Ranges | del(.ipRanges, .ipv6Ranges,.res,.res_message,.debug_info)]' | jq -r .[] > imperva.txt
+        curl -k -s --data "resp_format=json" https://my.imperva.com/api/integration/v1/ips | jq '[.["Imperva"] = .ipRanges | .["ImpervaIPv6"] = .ipv6Ranges | del(.ipRanges, .ipv6Ranges,.res,.res_message,.debug_info)]' | jq -r '.[]' > imperva.txt
         jq -s '.[0] * .[1]' ranges_nuclei.txt imperva.txt > ranges.txt
     - name: Commit files
       run: |
